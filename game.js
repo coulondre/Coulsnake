@@ -4,7 +4,6 @@ $(document).ready(function(){
 	var canvasWidth = $("#canvas").width();
 	var canvasHeight = $("#canvas").height();
 	var cw = 15;
-	var direction = "right";
 	var score = 0;
 	var snake = new Snake();
 	var food = new Food();
@@ -31,6 +30,7 @@ $(document).ready(function(){
 
 	function begin() {
 		isPlaying = true;
+		checkscore(score);
 		requestAnimFrame(loop);
 	}
 
@@ -43,7 +43,6 @@ $(document).ready(function(){
 	function draw() {
 		snake.draw();
 		food.draw();
-
 	}
 
 	function loop() {
@@ -63,6 +62,7 @@ $(document).ready(function(){
 	// Snake Class & methods
 	function Snake() {
 		this.length = 5;
+		this.direction = "right";
 		this.isUpKey = false;
     	this.isDownKey = false;
    		this.isRightKey = false;
@@ -90,7 +90,6 @@ $(document).ready(function(){
 	Snake.prototype.checkDirection = function() {
 		var newX = this.curX;
 		var newY = this.curY;
-		//penser à virer isMoving et à revoir ce code car le snake doit avancer tout seul
 
 		if (this.isUpKey) {
 	        this.direction = "up";
@@ -116,8 +115,16 @@ $(document).ready(function(){
 	    this.curX = newX;
 	    this.curY = newY;
 
+	    if (outOfBounds(newX, newY)) {
+			$('#final_score').html(score);
+			$('#overlay').fadeIn(300);
+			return;
+	    }
+
 	    if (this.foodCollision) {
 	    	var tail = {x: newX, y: newY};
+	    	score ++;
+	    	checkscore(score);
 	    } else {
 	    	var tail = this.snakeArray.pop();
 		    tail.x = newX;
@@ -128,13 +135,12 @@ $(document).ready(function(){
 	};
 
 	Snake.prototype.checkFoodCollision = function(newX, newY) {
-		console.log(newX);
 		if (newX === food.x && newY === food.y) {
 			return true;
 		} else {
 			return false;
 		}
-	};
+	};* maj les sites : cadre emploi, monster, les jeudi, apec : ok* maj les sites : cadre emploi, monster, les jeudi, apec : ok
 
 
 	// Food Class & methods
@@ -182,6 +188,33 @@ $(document).ready(function(){
 	    }
 	}
 
-	console.log(snake);
-	console.log(food);
+	function checkscore(score){
+		if(localStorage.getItem('highscore') === null){
+			//If there is no high score
+			localStorage.setItem('highscore',score);
+		} else {
+			//If there is a high score
+			if(score > localStorage.getItem('highscore')){
+				localStorage.setItem('highscore',score);
+			}
+		}
+		$('#high_score').html('High Score: '+localStorage.highscore);
+		//Display Current Score
+		$('#score').html('Your Score: '+score);
+	}
+
+	function outOfBounds(newX, newY) {
+		if (newX == -1 || newX == canvasWidth/cw || newY == -1 || newY == canvasHeight/cw) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 });
+
+function resetScore(){
+	localStorage.highscore = 0;
+	//Display High Score
+	highscorediv = document.getElementById('high_score');
+	highscorediv.innerHTML ='High Score: 0';
+}
