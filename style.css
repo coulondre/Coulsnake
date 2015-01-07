@@ -31,7 +31,7 @@ canvas{
 	overflow:auto;
 }
 
-#score, #high_score{
+#score, #high-score{
 	width:25%;
 	height:50px;
 	padding-top:20px;
@@ -42,7 +42,7 @@ canvas{
 	text-alignment:center;
 }
 
-#reset_score{
+#reset-score{
 	padding:10px;
 	float:right;
 }

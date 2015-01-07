@@ -116,7 +116,7 @@ $(document).ready(function(){
 	    this.curY = newY;
 
 	    if (outOfBounds(newX, newY)) {
-			$('#final_score').html(score);
+			$('#final-score').html(score);
 			$('#overlay').fadeIn(300);
 			return;
 	    }
@@ -140,8 +140,7 @@ $(document).ready(function(){
 		} else {
 			return false;
 		}
-	};* maj les sites : cadre emploi, monster, les jeudi, apec : ok* maj les sites : cadre emploi, monster, les jeudi, apec : ok
-
+	};
 
 	// Food Class & methods
 	function Food() {
@@ -198,7 +197,7 @@ $(document).ready(function(){
 				localStorage.setItem('highscore',score);
 			}
 		}
-		$('#high_score').html('High Score: '+localStorage.highscore);
+		$('#high-score').html('High Score: '+localStorage.highscore);
 		//Display Current Score
 		$('#score').html('Your Score: '+score);
 	}
@@ -215,6 +214,6 @@ $(document).ready(function(){
 function resetScore(){
 	localStorage.highscore = 0;
 	//Display High Score
-	highscorediv = document.getElementById('high_score');
+	highscorediv = document.getElementById('high-score');
 	highscorediv.innerHTML ='High Score: 0';
 }
